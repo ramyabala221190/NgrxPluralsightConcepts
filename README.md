@@ -1,32 +1,27 @@
 
 State is view state, user info ,entity data,user selection and input
 
-Purpose of ngrx: Provides a formal pattern for organising state into 1 single local state container.
+Purpose of ngrx: Provides a formal pattern for organising state into 1 single local state container called the store.
 Managing that state by requiring a 1 way data flow and Communicating the state changes to our components
-so that they can react accordingly
+so that they can react accordingly.
+
+Without ngrx, we will use a service to define a state everywhere
 
 ngrx=redux pattern+ angular
-
-Redux pattern helps to manage state by providing a 1 way data flow
-
-Without ngrx, we will use a service to define a state
-everywhere
 
 Use ngrx when there is state everywhere.
 The store provides a place for UI state to retain it between
 router views.The store provides a client-side cache to use as needed
 when there are excessive http requests 
-
 Use ngrx when there are complex component interactions.
 
 Dont use ngrx when:
 =>Team is new to angular
 =>Extra code required for Ngrx may not be worth the effort
-
 https://github.com/DeborahK/Angular-NgRx-GettingStarted
 
-
-Redux is a state container for Js apps.
+------------------------------------------------------------------------------------------------------------------------------
+Redux is a state container for Js apps.Redux pattern helps to manage state by providing a 1 way data flow
 
 Redux Principles:
 
@@ -36,8 +31,7 @@ the state is by dispatching an action.
 3. Changes to the store are made using pure functions
 called reducers
 
-Store is the JS object that holds all your
-application state.
+Store is the JS object that holds all your application state.
 
 Do you put every pieice of state in the store? No
 What should not go in the store?
@@ -45,16 +39,15 @@ What should not go in the store?
 =>Angular form state
 =>Non serilizable state
 
-Dispatch an action to change state
+1. Dispatch an action to change state
 eg: Login action after login form submission
 Toggle side menu action after a button click
 Retreive data action when initializing a component
 Start global spinner action when saving data
 
-Use Reducers to change state.The reducer updates the store and the store notifies all
+2. Use Reducers to change state.The reducer updates the store and the store notifies all
 subscribers
- 
-Set a userDetails property on login
+ Set a userDetails property on login
 Toggle a sideMenuVisible property to true on button clicl
 set successfully retreived data on component initialisatino
 set a globalSpinnerVisible property to true while saving
@@ -63,6 +56,8 @@ data
 Reducers are pure functions. They return the same result for the same
 inputs each time. They are not dependent on external variables.
 
+3. Use selectors so that the component can subscribe to the latest state.
+-----------------------------------------------------------------------------------------------------------------------
 Layout the state by feature modules to prevent confusion with the
 state.
 State is a Js object which contains properties and each property
@@ -76,24 +71,19 @@ import { StoreModule } from '@ngrx/store';
 The store is initialised as below in the imports section:
     StoreModule.forRoot(reducer)
 
-The store must intialised to the reducer that creates the application
-state.
+The store must intialised to the reducer that creates the application state.
 There can be multiple reducers to cater to every feature.
 
 reducer is the AppModule reducer.
 
-We also define a reducer for every feature and initialise the store
-in each feature module as:
-
+We also define a reducer for every feature and initialise the store in each feature module as:
 StoreModule.forFeature('name of state',reducer_name)
 
 Reducer modifies the slice of state and replaces the existing state slice with the modified one
-making it immutable. So we replace the state instead ofmodifying the existing state.
+making it immutable. So we replace the state instead of modifying the existing state.
  
-Selector must be a pure function
-Always define a selector for every bit of state and then compose them
+Selector must be a pure function.Always define a selector for every bit of state and then compose them
 as needed to get the desired data
-
 
 Effects take an action,do some work and dispatch a new action.
 
@@ -167,6 +157,8 @@ action argument in the mergeMap is the argument passed to the Action while dispa
             })
         )
     })
+
+
 We are creating an effect which listens for ProductActions.updateProduct action using the ofType operator
 and then call the service to perform the action.
 Finally it dispatches a ProductActions.updateProductSuccess if action is successfull and 
