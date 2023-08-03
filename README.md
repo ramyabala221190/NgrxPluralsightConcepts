@@ -170,6 +170,11 @@ These 2 actions dispatched by the effect will be listened to by reducer to updat
 
 Always use immutable methods while updating state.
 
+------------------------------------------------------------------------
+Shell component is the container component containing 2 presentation components: List and Edit.
+The container takes care of action dispatch and selector subscription.
+The container passes the data to the presentation comp for view.
+Presenation components dont handle any action dispatches or selector subscriptions.
 Presentation components can use OnPush change detection strategy
 
 Understanding more of barrel files and state modules.
